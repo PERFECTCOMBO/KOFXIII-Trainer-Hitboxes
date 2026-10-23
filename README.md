@@ -4,7 +4,7 @@ Combined trainer and automatic hitbox viewer for **KOF XIII GLOBAL MATCH (Window
 
 ## Download
 
-Download **KOF13-Trainer-Hitboxes-Beta3.zip** from [Beta 3](https://github.com/PERFECTCOMBO/KOFXIII-Trainer-Hitboxes/releases/tag/v0.2.0-beta.3). Choose that file under Assets, not the automatic Source code archives.
+Download **KOF13-Trainer-Hitboxes-Beta3.zip** from [Beta ](https://github.com/PERFECTCOMBO/KOFXIII-Trainer-Hitboxes/releases). Choose that file under Assets, not the automatic Source code archives.
 
 **Prerelease:** installation, restoration, Lua preservation and DLL forwarding checks passed. In-game testing of this compatibility build is still pending. Online match compatibility is unverified.
 
