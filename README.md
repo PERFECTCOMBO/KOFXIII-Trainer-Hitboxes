@@ -1,76 +1,91 @@
-# KOF XIII Trainer + Hitboxes
+# KOF XIII Trainer + Native Hitboxes
 
-Combined trainer and automatic hitbox viewer for **KOF XIII GLOBAL MATCH (Windows)** by KOFCOMBO / PERFECTCOMBO.
+Training tools for **THE KING OF FIGHTERS XIII GLOBAL MATCH on Steam**.
 
-## Download
+[Download Beta 7](https://github.com/PERFECTCOMBO/KOFXIII-Trainer-Hitboxes/releases/tag/v0.2.0-beta.7) · [Build the native components](BUILDING.md) · [License scope](THIRD-PARTY.md)
 
-Download **KOF13-Trainer-Hitboxes-Beta3.zip** from [Beta ](https://github.com/PERFECTCOMBO/KOFXIII-Trainer-Hitboxes/releases). Choose that file under Assets, not the automatic Source code archives.
-
-**Prerelease:** installation, restoration, Lua preservation and DLL forwarding checks passed. In-game testing of this compatibility build is still pending. Online match compatibility is unverified.
-
-## Compatibility
-
-Beta 3 automatically detects:
-
-- A supported clean game, including unrelated asset mods.
-- **KOF XII Six-Stage Pack Build 83**: keeps its stage/victory functions and stage-lighting DLL.
-- An existing standalone **Trainer + Hitboxes Beta 2** installation.
-
-Unrelated stage artwork, previews, audio, recordings and viewer settings are preserved. Mods editing the same shared scripts, practice menu/stats or input DLL need a compatible merge. Unknown shared-file conflicts are rejected before writes. This is not universal compatibility with every mod.
-
-## Install
-
-1. To use both mods, install the full **six-stage Build 83 pack first**, then this trainer. The trainer ZIP does not include stage artwork.
-2. Extract the complete trainer ZIP into a folder outside the game folder. Keep its files together.
-3. Close XIII and the hitbox viewer.
-4. In Steam, choose **Manage > Browse local files**. Copy the path of the folder containing game.exe.
-5. Run **INSTALL.cmd**, paste the game folder and wait for **installed and verified**.
-6. Launch XIII normally. The viewer starts automatically in the background.
-7. In offline Training, use **LP+LK / LP+HP** to switch pages. Page 4 > **HITBOX VIEWER** turns it on.
-
-If access is denied, run INSTALL.cmd as administrator. Do not drag payload files into the game folder: that bypasses compatibility checks and backup.
-
-**Install order matters:** do not copy the stage pack's main.lua or dinput8.dll over the combined installation. To add stages to a trainer-only install, restore the trainer, install Build 83, then reinstall the trainer. Restore the trainer before updating stages.
+The custom native trainer, loaders and renderer adapters are now available as
+open source under the MIT license. SNK's original game and renderer components
+remain proprietary; see the source scope below.
 
 ## Features
 
-- Four offline training pages with restart-position, play-side and HUD controls.
-- Large and small training stats panels.
-- Record Dummy, Stop / Playback, Play Recording and Loop Recording, with icons and five saved recording slots.
-- Hitbox viewer On/Off and attack-hitbox, hurtbox and pushbox filters.
-- Fill: Outline / Light / Dense. Box Labels: On / Off.
-- Frame-data panels, timing meter and on-screen legend removed.
-- Hitbox master turns off through the patched training exits; filter preferences remain.
-- F8 toggles the overlay, F9 opens display settings, F3 cycles fill. Viewer hides when the game loses focus.
-- Online waiting practice retains two pages, SELECT BUTTON, Player Match Menu and Return to Room. Custom recording/hitbox controls are for offline Training.
-- Menu-value, command, icon-alignment and hidden-divider panel-stretch fixes through Test 61.
+- Expanded in-game training menu and five recording slots.
+- RANDOM LOOP chooses among nonempty recordings and permits consecutive repeats.
+- Native hitbox rendering inside the game; no separate viewer window required.
+- Green pushboxes, blue hurtboxes and red attack boxes.
+- Page 4 fill settings: Off, Light and Strong.
+- Experimental save-state and reversal tools.
 
-## Recording slots
+**No extra stages or stage replacements are included.** Use your existing game stages.
 
-Let recordings finish the full **10 seconds** before saving. In a fresh session, make a full-length recording before loading a full saved slot.
+## Install the playable release
 
-**LENGTH MISMATCH** means the saved/current recording buffers differ. This version refuses that load; shorter recordings are not resized. Saving replaces the selected slot and keeps its previous save as a .bak.
+1. Download and extract the entire Beta 7 ZIP from Releases.
+2. Close the game and any older viewer, then run `INSTALL.cmd`.
+3. Paste the Steam game folder. Supported starting points are a clean supported
+   Steam installation or the standalone Trainer Beta 6.
+4. Launch through Steam, enter offline Practice and open page 4 for hitboxes.
 
-## Backup and restore
+Keep the backup folder created by the installer. `RESTORE.cmd` restores the
+pre-install files. Unsupported executables or conflicting shared-file mods are
+refused. Report the exact error or `installer-error.txt` when requesting help;
+review it for local paths before sharing it.
 
-INSTALL creates **_KOF13TrainerHitboxesBeta3_Backup** in the game folder. Keep it. This is a mod-file backup, not a Windows system restore point.
+## Training menu
 
-To uninstall, close XIII/viewer, run **RESTORE.cmd**, and select the same game folder. It restores the exact pre-install files, preserves personal recordings/settings, and refuses to overwrite newer shared-file changes. Restoring a Build 83 integration leaves Build 83 installed.
+![Expanded training menu, gauge settings](training-menu.jpg)
 
-**Beta 2 upgrades:** keep both backup folders. Restoring Beta 3 returns to Beta 2. Use the Beta 2 package and its original backup to remove Beta 2 afterward. Uninstall in reverse installation order; never use someone else's backup.
+Training-menu screenshot, showing page 2 of 4. Background artwork belongs to SNK;
+no stage assets are distributed in this repository or the Beta 7 package.
 
-## Report problems
+## Source download
 
-Please [open an issue](https://github.com/PERFECTCOMBO/KOFXIII-Trainer-Hitboxes/issues) with:
+[Download the MIT-licensed native source ZIP](KOFXIII-Native-Source-beta7.zip?raw=true).
+Extract it to obtain the source tree, build scripts, tests and license notices.
+The directories below are inside that archive.
 
-- Trainer version and game version.
-- Offline Training or online waiting-practice mode.
-- Other mods, including the stage-pack build.
-- Steps, expected result, actual result and exact error.
-- Screenshot/video if possible; for connection errors, include the message in F9.
+## Source scope
 
-Avoid sharing personal information in logs/screenshots.
+- `native/`: trainer/recording implementation, game hooks, loaders and renderer.
+- `snk-renderer/original-adapter.h`: custom adapters for the original draw loop.
+- `extract-snk.py`: generates excluded SNK headers from local, hash-verified inputs.
+- `tests/`: focused recording regressions, including selection with five slots.
+- `installer/`: Beta 7 installation/restore tooling and file-verification metadata.
 
-## Credits
+The genuine SNK draw loop and collision shaders are **not included as open-source
+code**. Building that renderer requires the matching debug executable locally;
+no matching PDB is needed. The trainer bridge can be built without it.
+See [BUILDING.md](BUILDING.md) for both paths.
 
-Original hitbox-viewer and Dear ImGui license notices are included in the ZIP's licenses folder. Original game/stage artwork belongs to SNK. This is an unofficial community mod.
+The release's modified game Lua/GFX menu resources and their editing pipeline
+are not part of this source release. Building these native DLLs therefore does
+not rebuild the entire playable ZIP from source. Install the existing Beta 7
+menu resources for integration testing. No `game.exe`, generated SNK headers,
+recordings, saves, credentials or local machine paths are included in the
+source files published here.
+
+## Validation and limitations
+
+The cleaned native source builds all four DLLs using MSVC x86. Focused recording
+regressions pass, including repeats and five-slot selection. A prior live Steam
+check selected slots `1, 5, 5, 3, 4, 3, 2, 4`; random mode does not promise that
+repeats or ascending runs will never happen.
+
+Hitbox colors/fill and OBS Game Capture were previously verified in Practice.
+This source publication does not change the Beta 7 download or installed game.
+The complete ten-category color chart is not implemented. Save states and
+reversals remain experimental; full-roster, controller and combined-package
+coverage is incomplete. Other graphics hooks can conflict with capture.
+
+## License and contributions
+
+Custom code: [MIT](LICENSE). Viewer-derived work retains the notice in
+[licenses](Original-KOF13-Hitbox-Viewer.txt). SNK resources and screenshot
+artwork are excluded; read [THIRD-PARTY.md](THIRD-PARTY.md).
+
+Bug reports and pull requests are welcome. Include the game version, reproduction
+steps and relevant logs with personal paths removed. Do not upload game binaries,
+private recordings, saves, proprietary generated headers or credentials.
+
+Unofficial project; not affiliated with or endorsed by SNK or Valve.
